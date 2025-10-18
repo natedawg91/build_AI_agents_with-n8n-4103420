@@ -1,6 +1,6 @@
 const item = (items[0] && items[0].json) || {};
-const type = String(item.exhibit_type || "").trim().toLowerCase();
-const size = Number(item.size_sqft);
+const type = String(query.exhibit_type || "").trim().toLowerCase();
+const size = Number(query.size_sqft);
 
 if (!Number.isFinite(size)) throw new Error("size_sqft must be a number");
 
@@ -16,7 +16,7 @@ if (!(size > 0)) throw new Error("Booth size must be greater than 0");
 if (size < cfg.min) throw new Error(`Min size for ${type} is ${cfg.min}`);
 
 const subtotal = size * cfg.price;
-return [{
+return JSON.stringify([{
   json: {
     type,
     size_sqft: size,
@@ -25,4 +25,4 @@ return [{
     subtotal,
     total: subtotal + cfg.fee,
   }
-}];
+}]);
